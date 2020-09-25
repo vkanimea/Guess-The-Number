@@ -8,7 +8,7 @@
  * Done: Use the showYouWon... functions within displayResult to display the correct dialog
  * Done: Save the guess history in a variable called guess
  * Done: Display the guess history using displayHistory() function
- * TODO: Use the initGame() function to restart the game
+ * Done: Use the initGame() function to restart the game
  */
 
 // Variable to store the list of guesses 
