@@ -9,17 +9,21 @@
  * Done: Save the guess history in a variable called guess
  * Done: Display the guess history using displayHistory() function
  * Done: Use the initGame() function to restart the game
+ * Done: Add in Hint Function to reduce the no. of guesses
  */
 
 // Variable to store the list of guesses 
 let guesses = [];
 // Variable for store the correct random number 
 let correctNumber = getRandomNumber();
+let numberGuess = ''; 
 
 
 window.onload = function() {
     document.getElementById("number-submit").addEventListener("click", playGame);
     document.getElementById("restart-game").addEventListener("click", initGame);
+    document.getElementById("hint").addEventListener("click", showHint);
+    
 }
 
 /**
@@ -28,13 +32,12 @@ window.onload = function() {
 function playGame(){
   // *CODE GOES BELOW HERE *
   
-  let numberGuess = document.getElementById('number-guess').value;
-  console.log('Number Guess is '+numberGuess+' Correct Guess is '+correctNumber);
+  let numberGuess = document.getElementById("number-guess").value;
+  //console.log('Number Guess is '+numberGuess+' Correct Guess is '+correctNumber);
   
   displayResult(numberGuess);
-  displayHistory();
   saveGuessHistory(numberGuess);
- 
+  displayHistory();
 
 }
 
@@ -46,7 +49,11 @@ function playGame(){
 function displayResult(numberGuess) {
   if (numberGuess > correctNumber) { 
     showNumberAbove();
-  } else if (numberGuess < correctNumber) { 
+  } 
+    else if (numberGuess == "") {
+      showNoGuess();
+    }
+    else if (numberGuess < correctNumber) { 
     showNumberBelow(); 
       } else if (numberGuess == correctNumber) 
              { showYouWon(); }
@@ -64,12 +71,14 @@ function initGame(){
   // Reset Result content
   // Clear the guesses Array
   // Clear the History 
-  let correctNumber = getRandomNumber(); 
-  let guesses = [];  
-  document.getElementById("history").innerHTML = " ";
+  correctNumber = getRandomNumber(); 
+  guesses = [];  
+  document.getElementById("history").innerHTML = "";
+  document.getElementById("number-guess").value = "";
   resetResultContent();
   
 }
+
 
 /**
  * Reset the HTML content for guess history
@@ -98,7 +107,12 @@ function getRandomNumber(){
  */
 function saveGuessHistory(guess) {
   // *CODE GOES BELOW HERE *
+  if (guess == "") {        // Check if guess is empty 
+    guesses.pop(guess);     // remove from the guess history
+  } 
+  else {                    // otherwise save in guess history
   guesses.push(guess);
+  }
   console.log(guesses);
 }
 
@@ -111,8 +125,11 @@ function saveGuessHistory(guess) {
  * HINT: use while loop and string concatentation to create a list of guesses
  */
 function displayHistory() {
+  
+  
   let index = guesses.length - 1; // Check at the end of the array and since array with 0 instead of 1
   let list = "<ul class='list-group'>";
+
   while (index >= 0 ) {
   // *CODE GOES BELOW HERE *
   list += "<li class='list-group-item'>" + 
@@ -176,5 +193,37 @@ function showNumberBelow(){
    */
   // *CODE GOES BELOW HERE *
   let dialog = getDialog('warning',text);
+  document.getElementById("result").innerHTML = dialog;
+}
+
+function showNoGuess(){
+  const text = "Enter a number between 1 and 100"
+  /**
+   * Retrieve the dialog using the getDialog() function
+   * and save it to variable called dialog
+   * HINT: Use the 'warning' and text parameters 
+   */
+  // *CODE GOES BELOW HERE *
+  let dialog = getDialog('won',text);
+  document.getElementById("result").innerHTML = dialog;
+}
+
+function showHint(){
+  let numberbelow = correctNumber - 8;
+  let numberabove = correctNumber + 7;
+  if (correctNumber <= 10) {
+      numberbelow = 1;
+      numberabove = correctNumber + 1;
+
+  } 
+  
+  const text = "The Number is between "+numberbelow+" and "+numberabove;
+  /**
+   * Retrieve the dialog using the getDialog() function
+   * and save it to variable called dialog
+   * HINT: Use the 'warning' and text parameters 
+   */
+  // *CODE GOES BELOW HERE *
+  let dialog = getDialog('won',text);
   document.getElementById("result").innerHTML = dialog;
 }
