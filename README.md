@@ -7,6 +7,7 @@ Each user input is evaluated and a Result will be shown whether the Guess is
   - Too High
   - Too Low
   - Correct
+  - Empty
 
 If the User wants a Hint, there is a Hint button that reduces the number of 
 guesses by giving a reduced range.
