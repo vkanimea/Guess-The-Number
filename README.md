@@ -1,4 +1,4 @@
-# Guess-The-NumberExercise
+# Guess-The-Number
 Clever Programmer - Module 2 - Javascript Crash Course.
 
 The Web application Generates a Random Number from 1 - 100
